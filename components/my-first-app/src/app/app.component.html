@@ -1,0 +1,28 @@
+<!-- {{}} - INTERPOLATION -->
+<div>{{title}}</div>
+<!-- [] - BINDING -->
+<input [value]="title" />
+<input #inputElement type="text">
+<button (click)="changeTitleValue(inputElement)">CHANGE TITLE</button>
+
+<button (click)="buttonClickHandler()">Click me!</button>
+
+<!-- *ngFor and *ngIf - structural directives ngClass - ATTRIBUTE DIRECTIVE -->
+<ul>
+  <li *ngFor="let user of users">
+    <span>{{user.name}}</span>
+    <span>{{user.age}}</span>
+  </li>
+</ul>
+
+<div *ngIf="showText">VISIBLE</div>
+
+<button (click)="toggleText()">{{showText ? 'HIDE TEXT' : 'SHOW TEXT'}}</button>
+<button (click)="toggleText2($event, 100, 200)">{{showText ? 'HIDE TEXT 2' : 'SHOW TEXT 2'}}</button>
+
+<div>HEADER</div>
+<div id="content">
+  <app-user-list *ngIf="users" [userArray]="users" (addUser)="addNewUserHandler($event)"></app-user-list>
+  <div *ngIf="!users">Loading...</div>
+</div>
+<div>FOOTER</div>
