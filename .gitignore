@@ -37,6 +37,7 @@ bower_components
 *.sublime-workspace
 
 # IDE - VSCode
+.vscode
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
@@ -49,6 +50,7 @@ bower_components
 .vscode/extensions.json
 
 # misc
+/.angular/cache
 .sass-cache
 connect.lock
 typings
