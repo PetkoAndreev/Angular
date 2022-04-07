@@ -9,6 +9,7 @@ import { ThemesRoutingModule } from './themes-routing.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ThemesDetailPageComponent } from './themes-detail-page/themes-detail-page.component';
 import { ThemesNewPageComponent } from './themes-new-page/themes-new-page.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -26,6 +27,7 @@ import { ThemesNewPageComponent } from './themes-new-page/themes-new-page.compon
     CommonModule,
     ThemesRoutingModule,
     SharedModule,
+    FormsModule,
   ],
   exports: [
     // AsideComponent,
