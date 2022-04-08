@@ -2,7 +2,10 @@ const { themeModel } = require('../models');
 const { newPost } = require('./postController')
 
 function getThemes(req, res, next) {
-    themeModel.find()
+    // Added to filter themes by title e.g. search functionality
+    const title = req.query.title || '';
+
+    themeModel.find({ themeName: { $regex: title, $options: 'i' } })
         .populate('userId')
         .then(themes => res.json(themes))
         .catch(next);
@@ -13,11 +16,11 @@ function getTheme(req, res, next) {
 
     themeModel.findById(themeId)
         .populate({
-            path : 'posts',
-            populate : {
-              path : 'userId'
+            path: 'posts',
+            populate: {
+                path: 'userId'
             }
-          })
+        })
         .then(theme => res.json(theme))
         .catch(next);
 }

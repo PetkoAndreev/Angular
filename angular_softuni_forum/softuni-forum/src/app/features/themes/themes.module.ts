@@ -9,7 +9,7 @@ import { ThemesRoutingModule } from './themes-routing.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ThemesDetailPageComponent } from './themes-detail-page/themes-detail-page.component';
 import { ThemesNewPageComponent } from './themes-new-page/themes-new-page.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -28,6 +28,7 @@ import { FormsModule } from '@angular/forms';
     ThemesRoutingModule,
     SharedModule,
     FormsModule,
+    ReactiveFormsModule,
   ],
   exports: [
     // AsideComponent,

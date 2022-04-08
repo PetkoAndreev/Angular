@@ -1,7 +1,12 @@
+<form>
+  <input [formControl]="searchControl" type="text" placeholder="Search for posts">
+</form>
 <div *ngIf="themeList">
-    <app-theme-list-item *ngFor="let theme of themeList" [theme]="theme"></app-theme-list-item>
-    <div *ngIf="themeList.length === 0">No Themes!</div>
-  </div>
-  <div *ngIf="!themeList">
-    Loading...
-  </div>
+  <!-- With this pipe - | slice:0:3 we can make to show only first 3 themes -->
+  <app-theme-list-item *ngFor="let theme of themeList" [theme]="theme"></app-theme-list-item>
+  <div *ngIf="themeList.length === 0">{{localize('no-themes-message', l10n)}}</div>
+</div>
+<div *ngIf="!themeList">
+  Loading...
+</div>
+<form>
