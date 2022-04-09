@@ -10,7 +10,12 @@ import { CoreModule } from './core/core.module';
 import { RouterModule } from '@angular/router';
 import { PagesModule } from './features/pages/pages.module';
 import { AppRoutingModule } from './app-routing.module';
-import { AuthService } from './auth.service';
+import { AuthService } from './core/services/auth.service';
+import { StoreModule } from '@ngrx/store';
+import { counterReducer, currentUserReducer, IRootState } from './+store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
 // import { AuthModule } from './auth/auth.module';
 
 @NgModule({
@@ -25,12 +30,23 @@ import { AuthService } from './auth.service';
     AppRoutingModule,
     RouterModule,
     PagesModule,
+    StoreModule.forRoot<IRootState>({
+      // Will be done with reducer
+      counter: counterReducer,
+      currentUser: currentUserReducer,
+    }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production
+    }),
+    EffectsModule.forRoot([]),
     // AuthModule, - removed for lazy loading
   ],
   providers: [
     {
       provide: APP_INITIALIZER,
       useFactory: (authService: AuthService) => {
+        // debugger; // Used for debugging purposes
         return () => authService.authenticate();
       },
       deps: [AuthService],

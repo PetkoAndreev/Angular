@@ -6,7 +6,7 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
-import { MessageBusService, MessageType } from './message-bus.service';
+import { MessageBusService, MessageType } from './../services/message-bus.service';
 
 @Injectable()
 export class ErrorHandlerInterceptor implements HttpInterceptor {

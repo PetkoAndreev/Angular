@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Observable, tap, map, BehaviorSubject, catchError, EMPTY } from 'rxjs';
+import { IRootState, login, logout } from 'src/app/+store';
 import { environment } from 'src/environments/environment';
-import { IUser } from './core/interfaces';
-import { CreateUserDto } from './core/user.service';
+import { IUser } from '../interfaces';
+import { CreateUserDto } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +13,16 @@ import { CreateUserDto } from './core/user.service';
 export class AuthService {
   // Handle the logic for registration, login and authentication
 
-  private _currentUser = new BehaviorSubject<IUser>(undefined!);
+  // private _currentUser = new BehaviorSubject<IUser>(undefined!);
 
-  currentUser$ = this._currentUser.asObservable();
-  isLoggedIn$: Observable<boolean> = this.currentUser$.pipe(map(user => !!user))
+  // currentUser$ = this._currentUser.asObservable();
+  // isLoggedIn$: Observable<boolean> = this.currentUser$.pipe(map(user => !!user))
 
-  constructor(private httpClient: HttpClient) { }
+  // Get current user with ngRX
+  currentUser$ = this.store.select(globalState => globalState.currentUser);
+  isLoggedIn$ = this.currentUser$.pipe(map(user => !!user));
+
+  constructor(private httpClient: HttpClient, private store: Store<IRootState>) { }
 
   login$(userData: { username: string, password: string }): Observable<IUser> {
     return this.httpClient
@@ -45,11 +51,16 @@ export class AuthService {
 
   handleLogin(newUser: IUser) {
     // console.log(newUser)
-    this._currentUser.next(newUser)
+    // this._currentUser.next(newUser)
+    // State management
+    this.store.dispatch(login({ user: newUser }))
   }
 
   handleLogout() {
-    this._currentUser.next(undefined!)
+    // this._currentUser.next(undefined!)
+    // State management
+    this.store.dispatch(logout())
+
   }
 
   authenticate(): Observable<IUser> {

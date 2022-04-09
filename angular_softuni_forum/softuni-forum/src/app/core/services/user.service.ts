@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 // import { isUndefined } from 'util';
-import { IUser } from './interfaces';
-import { StorageService } from './storage.service';
+import { IUser } from './../interfaces';
+import { StorageService } from './../services/storage.service';
 
 export interface CreateUserDto { username: string, email: string, password: string, phone?: string }
 

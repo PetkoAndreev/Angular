@@ -7,8 +7,8 @@ import {
   HttpResponse
 } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { IUser } from './interfaces';
-import { AuthService } from '../auth.service';
+import { IUser } from './../interfaces';
+import { AuthService } from './../services/auth.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {

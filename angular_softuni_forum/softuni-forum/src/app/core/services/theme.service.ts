@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { ITheme } from '../core/interfaces';
+import { ITheme } from '../../core/interfaces';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 const apiUrl = environment.apiUrl;
 

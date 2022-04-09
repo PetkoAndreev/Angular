@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { AuthService } from 'src/app/auth.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { IUser } from '../interfaces';
-import { MessageBusService, MessageType } from '../message-bus.service';
+import { MessageBusService, MessageType } from '../services/message-bus.service';
 
 @Component({
   selector: 'app-header',

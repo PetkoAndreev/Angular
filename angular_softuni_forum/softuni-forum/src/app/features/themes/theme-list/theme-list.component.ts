@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, filter, map, mergeMap, startWith, switchMap, tap } from 'rxjs';
 import { ITheme } from '../../../core/interfaces';
-import { ThemeService } from '../../../core/theme.service';
+import { ThemeService } from '../../../core/services/theme.service';
 
 @Component({
   selector: 'app-theme-list',

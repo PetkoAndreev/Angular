@@ -1,8 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from 'src/app/auth.service';
-import { MessageBusService, MessageType } from 'src/app/core/message-bus.service';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { IAuthModuleState, initializeLoginState, loginProcessError, startLoginProcess } from 'src/app/+store';
+import { loginErrorMessageSelector, loginIsLoginPendingSelector } from 'src/app/+store/selectors';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { MessageBusService, MessageType } from 'src/app/core/services/message-bus.service';
 import { emailValidator } from '../util';
 
 @Component({
@@ -10,9 +14,10 @@ import { emailValidator } from '../util';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
-  errorMessage: string = '';
+  errorMessage$: Observable<string> = this.store.select(loginErrorMessageSelector);
+  isLoginPending$: Observable<boolean> = this.store.select(loginIsLoginPendingSelector);
 
   loginFormGroup: FormGroup = this.formBuilder.group({
     // we have two options for email validator - custom one or Validators.pattern
@@ -27,12 +32,18 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private messageBus: MessageBusService,
     private activatedRoute: ActivatedRoute,
+    private store: Store<IAuthModuleState>,
   ) { }
 
   ngOnInit(): void {
+    // this.store.dispatch(initializeLoginState());
     // this.loginFormGroup.get('email')?.valueChanges.subscribe(value => {
     //   console.log('email changed', value)
     // })
+  }
+
+  ngOnDestroy(): void {
+    this.store.dispatch(initializeLoginState());
   }
 
   loginHandler(): void {
@@ -43,7 +54,8 @@ export class LoginComponent implements OnInit {
 
   handleLogin(): void {
     // console.log('from ngSubmit', this.loginFormGroup.valid);
-    this.errorMessage = '';
+    this.store.dispatch(startLoginProcess());
+    // this.errorMessage = '';
     this.authService.login$(this.loginFormGroup.value).subscribe({
       next: () => {
         if (this.activatedRoute.snapshot.queryParams['redirect-to']) {
@@ -59,7 +71,8 @@ export class LoginComponent implements OnInit {
 
       },
       error: (err) => {
-        this.errorMessage = err.error.message
+        this.store.dispatch(loginProcessError({ errorMessage: err.error.message }));
+        // this.errorMessage = err.error.message
       }
     })
   }

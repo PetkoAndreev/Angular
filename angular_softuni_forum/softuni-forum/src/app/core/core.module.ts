@@ -2,14 +2,14 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-import { PostService } from './post.service';
-import { storageServiceProvider } from './storage.service';
-import { ThemeService } from './theme.service';
-import { UserService } from './user.service';
+import { PostService } from './services/post.service';
+import { storageServiceProvider } from './services/storage.service';
+import { ThemeService } from './services/theme.service';
+import { UserService } from './services/user.service';
 import { RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from './auth.interceptor';
-import { ErrorHandlerInterceptor } from './error-handler.interceptor';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { ErrorHandlerInterceptor } from './interceptors/error-handler.interceptor';
 
 
 
